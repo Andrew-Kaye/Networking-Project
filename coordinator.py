@@ -2,20 +2,9 @@ from messages import *
 import random
 from socket import *
 
-# TODO: copy over messages.py and messages_test.py from milestone 1 into the 
-# same folder as your milestone 2 code. If you weren't satisfied with your
-# solution, reach out to Vishesh for his solution to milestone 1, which you are
-# welcome to use for misletone 2 onward.
-
-# TODO: address all the TODOs in this file (and delete each addressed TODO).
-
-# TODO: test your coordinator implementation by running coordinator_test.py.
-# You're welcome to add more tests there, but it's not required.
 
 # This class is fully implemented for you and you should not need to make any
 # modifications to it.
-# TODO: read the docstring of each method to understand how to use an instance
-# of WorkTracker in your coordinator code.
 class WorkTracker():
     """
     A class that tracks the status of plays to download and analyze. This is
@@ -133,16 +122,6 @@ class Coordinator():
         is listening on.
         """
 
-        # TODO: implement this method following the docstring specification.
-        # Use IPv4 network and TCP transport.
-        # Hint: in the case of picking an unused port, you can use the
-        # getsockname() method on a socket to get the port.
-
-        #instantiate the socet, use the port that the collaer provided or pick an unsused port
-        #then return the port that the server is listening on
-        #BEFORE YOU CALL socket on accept
-        #Predicted start of the code for starting a TCP transport on the server
-        #This is a direct copy-paste so it will need considerable editing)
         self.server_socket.bind(('localhost', port))
         self.server_socket.listen(10)
         return self.server_socket.getsockname()[1]
@@ -157,39 +136,34 @@ class Coordinator():
         bufsize = 4096
         while True:
             response = ""
-            if not self.work_tracker.is_all_work_done():
-                connection_socket, addr_ = self.server_socket.accept()
-                with connection_socket.makefile('rw', buffering=bufsize) as response_file:
-                    msg_deserialized = Message.deserialize(response_file)
-                    if isinstance(msg_deserialized, GetWorkRequest):
-                        path = self.work_tracker.get_path_for_volunteer()
-                        response_file.write(GetWorkResponse(self.work_tracker.play_download_host, path).serialize()) #send the response
-                        response_file.flush()
-                    elif isinstance(msg_deserialized, WorkCompleteRequest):
-                        self.work_tracker.process_result(msg_deserialized.path, msg_deserialized.word_counts)
-                        response = WorkCompleteResponse().serialize()
-                        response_file.write(response) #send the response
-                        response_file.flush()
-                    else:
-                        print("Value Error")
-                        raise ValueError
-                    print("Trying to write..")
-                    #If no Error Thrown, write response, send to socket, close client socket.
-                    response_file.write(response)
-                    print("Written, Flushing")
+            print("Waiting to accept")
+            connection_socket, addr_ = self.server_socket.accept()
+            print("accepted")
+            with connection_socket.makefile('rw', buffering=bufsize) as response_file:
+                msg_deserialized = Message.deserialize(response_file)
+                if isinstance(msg_deserialized, GetWorkRequest):
+                    print("receieved getworkrequest")
+                    path = self.work_tracker.get_path_for_volunteer()
+                    res = GetWorkResponse(self.work_tracker.play_download_host, path).serialize()
+                    response_file.write(res) #send the response
                     response_file.flush()
-                    print("Closing Socket")
-                    print(self.work_tracker.is_all_work_done())
-                    connection_socket.close()
-            else:
-                print("Printing result")
-                print(self.work_tracker.get_word_counts_desc())
-                connection_socket.close()
-                break
+                    if self.work_tracker.is_all_work_done():
+                        connection_socket.close()
+                        break
+                elif isinstance(msg_deserialized, WorkCompleteRequest):
+                    self.work_tracker.process_result(msg_deserialized.path, msg_deserialized.word_counts)
+                    response = WorkCompleteResponse().serialize()
+                    response_file.write(response) #send the response
+                    response_file.flush()
+                else:
+                    print("Value Error")  
+            connection_socket.close()   
+        self.server_socket.close()             
 
 
 if __name__ == '__main__':
     coordinator = Coordinator()
     port = coordinator.start(0)
     coordinator.accept_connections_until_all_work_done()
+    
     

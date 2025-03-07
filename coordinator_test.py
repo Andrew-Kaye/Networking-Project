@@ -50,7 +50,6 @@ class TestCoordinator(unittest.TestCase):
         started_paths = set()
         finished_paths = set()
         while True:
-            print("Sending GetWorkRequest")
             get_work_request = GetWorkRequest()
             get_work_response = self.send_request(get_work_request)
             self.assertIsInstance(get_work_response, GetWorkResponse)
@@ -61,7 +60,6 @@ class TestCoordinator(unittest.TestCase):
             self.assertFalse(get_work_response.path in finished_paths)
             started_paths.add(get_work_response.path)
             if len(started_paths) > 0:
-                print("Sending WorkCompleteRequest")
                 path = next(iter(started_paths))
                 word_counts = {'hello': 10, 'world': 20}
                 work_complete_request = WorkCompleteRequest(path, word_counts)
@@ -74,4 +72,4 @@ class TestCoordinator(unittest.TestCase):
         self.assertTrue(all_work_complete)
 
 if __name__ == '__main__':
-    unittest.main()    
+    unittest.main(verbosity=2)    
