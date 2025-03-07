@@ -6,8 +6,9 @@ format that can be sent over the network.
 Also defines the deserialization when receiving each message type from the
 network.
 """
+
 from io import *
-import ast
+
 class Message():
     """
     Base class for every app message type.
@@ -30,15 +31,15 @@ class Message():
         """
 
         firstline = msg.readline()
-        if firstline.startswith("GET "):
+        if firstline.startswith(HTTPGetRequest.firstline_prefix):
             return HTTPGetRequest.deserialize(firstline, msg)
-        elif firstline.startswith("REQWORK"):
+        elif firstline.startswith(GetWorkRequest.firstline_prefix):
             return GetWorkRequest.deserialize(firstline, msg)
-        elif firstline.startswith("ACK_REQWORK"):
+        elif firstline.startswith(GetWorkResponse.firstline_prefix):
             return GetWorkResponse.deserialize(firstline, msg)
-        elif firstline.startswith("REQ_WORK_COMP"):
+        elif firstline.startswith(WorkCompleteRequest.firstline_prefix):
             return WorkCompleteRequest.deserialize(firstline, msg)
-        elif firstline.startswith("ACK_WORK_COMP"):
+        elif firstline.startswith(WorkCompleteResponse.firstline_prefix):
             return WorkCompleteResponse.deserialize(firstline, msg)
         raise ValueError
 
@@ -48,6 +49,8 @@ class HTTPGetRequest(Message):
     a web-service hosting Shakespeare's plays.
     This is fully defined for you as an example.
     """
+
+    firstline_prefix = "GET "
 
     def __init__(self, host: str, path: str):
         """
@@ -74,7 +77,7 @@ class HTTPGetRequest(Message):
         instances of the class. 
         """
 
-        if firstline.startswith("GET "):
+        if firstline.startswith(HTTPGetRequest.firstline_prefix):
             [_, path, _] = firstline.split()
             line = rest.readline()
             [name, value] = line.split()
@@ -86,18 +89,21 @@ class GetWorkRequest(Message):
     """
     Message sent by a Volunteer to the Coordinator to ask for work.
     """
+    
+    firstline_prefix = "REQWORK"
 
-    # TODO: override serialize().
-    def serialize(self):
-        return "REQWORK\r\n"
+    # Overrides super().serialize()
+    def serialize(self) -> str:
+        return GetWorkRequest.firstline_prefix + "\n"
     
     def deserialize(firstline: str, rest: TextIOBase) -> Message:
         """
-        Parses the specified firstline (or raises a ValueException if the msg is not a valid
+        Parses the specified firstline and rest (of message) and returns a
+        GetWorkRequest (or raises a ValueException if the msg is not a valid
         serialized GetWorkRequest).
         """
-        # TODO: implement this.
-        if firstline.startswith("REQWORK"):
+
+        if firstline.startswith(GetWorkRequest.firstline_prefix):
             return GetWorkRequest()
         raise ValueError
 
@@ -106,6 +112,8 @@ class GetWorkResponse(Message):
     Message sent by the Coordinator to a Volunteer in response to the
     Volunteer's GetWorkRequest.
     """
+
+    firstline_prefix = "ACK_REQWORK "
 
     def __init__(self, host: str, path: str):
         """
@@ -118,35 +126,38 @@ class GetWorkResponse(Message):
         self.path = path
 
 
-    # TODO: override serialize().
-    def serialize(self) -> str:
-        if self.host and self.path:
-            result = "ACK_REQWORK\r\n"
-            result += f"Host: {self.host}\r\n"
-            result += f"Path: {self.path}\r\n"
-            result += "\r\n"
-        else: # No work available (host or path is unspecified)
-            result = f"ACK_REQWORK {"NoWork_noHost" if self.host is None else "NoWork_noPath"}\r\n"
+    def serialize(self):
+        result = GetWorkResponse.firstline_prefix
+        if len(self.host) > 0 and len(self.path) > 0:
+            result += "Download and analyze the following.\n"
+            result += "Host: %s\n" % (self.host)
+            result += "Path: %s\n" % (self.path)
+        else:
+            result += "There's no work left.\n"
         return result
-
+    
     def deserialize(firstline: str, rest: TextIOBase) -> Message:
         """
         Parses the specified firstline and rest (of message) and returns a
-        GetWorkResponse (or raises a ValueException if the msg given by Message class
-        is not a valid serialized GetWorkResponse).
+        GetWorkResponse (or raises a ValueException if the msg is not a valid
+        serialized GetWorkResponse).
         """
 
-        #TODO: redo for the new information that i found out :D
-        if firstline.startswith("ACK_REQWORK"):
-            if firstline[12:].startswith("NoWork"): # Check for "NoWork" case
-                return GetWorkResponse(host="", path="")
-            else: # Assume work is available, parse host and path from subsequent lines
-                host_line = rest.readline()
-                path_line = rest.readline()
-                if host_line.startswith("Host: ") and path_line.startswith("Path: "):
-                    host = host_line.split(": ", 1)[1].strip()
-                    path = path_line.split(": ", 1)[1].strip()
-                    return GetWorkResponse(host=host, path=path)
+        if firstline.startswith(GetWorkResponse.firstline_prefix):
+            host = ""
+            path = ""
+            if firstline.find("There's no work left") > 0:
+                return GetWorkResponse(host, path)
+            line = rest.readline()
+            while len(line) > 0:
+                [key, value] = line.split()
+                if key == "Host:":
+                    host = value
+                elif key == "Path:":
+                    path = value
+                if len(host) > 0 and len(path) > 0:
+                    return GetWorkResponse(host, path)
+                line = rest.readline()
         raise ValueError
     
 class WorkCompleteRequest(Message):
@@ -155,6 +166,8 @@ class WorkCompleteRequest(Message):
     about the word-frequency data for a Shakespeare play that was previously
     assigned to the Volunteer in response to a GetWorkRequest.
     """
+
+    firstline_prefix = "REQ_WORK_COMP "
 
     def __init__(self, path: str, word_counts: dict):
         """
@@ -166,53 +179,51 @@ class WorkCompleteRequest(Message):
         self.path = path
         self.word_counts = word_counts
 
-    # TODO: override serialize().
-    def serialize(self) -> str:
-        result = "REQ_WORK_COMP\r\n"
-        result += f"Path: {self.path}\r\n"
-        result += f"Word_count: .{self.word_counts}.\r\n"
+    # override super().serialize()
+    def serialize(self):
+        result = WorkCompleteRequest.firstline_prefix + self.path + "\n"
+        for [word, count] in self.word_counts.items():
+            result += "%s %d\n" % (word, count)
+        result += "\n"
         return result
     
     def deserialize(firstline: str, rest: TextIOBase) -> Message:
         """
-        Parses the firstline and rest (of message) given by the Message class 
-        and returns a a WorkCompleteRequest (or raises a ValueException if firstline or rest
-        is not a valid serialized WorkCompleteRequest).
-        - Will parse Firstline for validation
-        - Will parse Path to give a path back into avalid path for self.path of WorkCompleteRequest
-        - Will parse Word_Count into a dictonary class for valid self.word_counts of WorkCompleteRequest
-        
+        Parses the specified firstline and rest (of message) and returns a
+        WorkCompleteRequest (or raises a ValueException if the msg is not a
+        valid serialized WorkCompleteRequest).
         """
-        
-        if firstline.startswith("REQ_WORK_COMP"):
-            #Parse Path
-            line = rest.readline()    
-            [_, path] = line.split()
 
-            #Parse Dictonary
+        if firstline.startswith(WorkCompleteRequest.firstline_prefix):
+            [_, path] = firstline.split()
+            word_counts = dict()
             line = rest.readline()
-            [name, valueDict, _] = line.split(".")
-            if name.startswith("Word_count"):
-                return WorkCompleteRequest(path, ast.literal_eval(valueDict))
+            while line != "\n":
+                [word, count] = line.split()
+                word_counts[word] = int(count)
+                line = rest.readline()
+            return WorkCompleteRequest(path, word_counts)
         raise ValueError
-
+    
 class WorkCompleteResponse(Message):
     """
     Message sent by the Coordinator to a Volunteer in response to a
     WorkCompleteRequest.
     """
 
-    # TODO: override serialize().
-    def serialize(self) -> str:
-        return "ACK_WORK_COMP\r\n" 
+    firstline_prefix = "ACK_WORK_COMP"
 
-    def deserialize(firstline:str, rest: TextIOBase) -> Message:
+    # Overrides super().serialize().
+    def serialize(self):
+        return WorkCompleteResponse.firstline_prefix + "\n"
+    
+    def deserialize(firstline: str, rest: TextIOBase) -> Message:
         """
-        Parses the specified msg and returns a a WorkCompleteResponse (or
-        raises a ValueException if the msg is not a valid serialized
-        WorkCompleteResponse).
+        Parses the specified firstline and rest (of message) and returns a
+        WorkCompleteResponse (or raises a ValueException if the msg is not a
+        valid serialized WorkCompleteResponse).
         """
-        # TODO: implement this.
-        if firstline.startswith("ACK_WORK_COMP"):
-                return WorkCompleteResponse()
+        
+        if firstline.startswith(WorkCompleteResponse.firstline_prefix):
+            return WorkCompleteResponse()
         raise ValueError
