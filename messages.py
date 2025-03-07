@@ -129,11 +129,11 @@ class GetWorkResponse(Message):
     def serialize(self):
         result = GetWorkResponse.firstline_prefix
         if len(self.host) > 0 and len(self.path) > 0:
-            result += "Download and analyze the following.\n"
+            result += "ANALYSIS:\n"
             result += "Host: %s\n" % (self.host)
             result += "Path: %s\n" % (self.path)
         else:
-            result += "There's no work left.\n"
+            result += "FIN\n"
         return result
     
     def deserialize(firstline: str, rest: TextIOBase) -> Message:
@@ -146,7 +146,7 @@ class GetWorkResponse(Message):
         if firstline.startswith(GetWorkResponse.firstline_prefix):
             host = ""
             path = ""
-            if firstline.find("There's no work left") > 0:
+            if firstline.find("FIN") > 0:
                 return GetWorkResponse(host, path)
             line = rest.readline()
             while len(line) > 0:
