@@ -136,13 +136,10 @@ class Coordinator():
         bufsize = 4096
         while True:
             response = ""
-            print("Waiting to accept")
             connection_socket, addr_ = self.server_socket.accept()
-            print("accepted")
             with connection_socket.makefile('rw', buffering=bufsize) as response_file:
                 msg_deserialized = Message.deserialize(response_file)
                 if isinstance(msg_deserialized, GetWorkRequest):
-                    print("receieved getworkrequest")
                     path = self.work_tracker.get_path_for_volunteer()
                     res = GetWorkResponse(self.work_tracker.play_download_host, path).serialize()
                     response_file.write(res) #send the response
