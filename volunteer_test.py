@@ -6,6 +6,10 @@ import threading
 import unittest
 from volunteer import *
 
+import tracemalloc
+
+tracemalloc.start()
+
 class TestVolunteer(unittest.TestCase):
     """
     This test case starts a Coordinator server in another thread and runs tests
@@ -46,3 +50,4 @@ class TestVolunteer(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()    
+    print("Complete!")
