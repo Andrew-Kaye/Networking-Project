@@ -1,0 +1,483 @@
+PS C:\Users\andyk\OneDrive\School\LWTECH\Winter 2025\CSD 322\Code\Python\Networking Project Amandaleeanne>  & 'c:\Users\andyk\OneDrive\School\LWTECH\Winter 2025\python.exe' 'c:\Users\andyk\.vscode\extensions\ms-python.debugpy-2025.4.1-win32-x64\bundled\libs\debugpy\launcher' '16898' '--' 'c:\Users\andyk\OneDrive\School\LWTECH\Winter 2025\CSD 322\Code\Python\Networking Project Amandaleeanne\volunteer_test.py' 
+Listening on localhost:16904
+port: 16904
+Coordinator server thread started
+Connection from:  ('127.0.0.1', 16905)
+Received a GetWorkRequest.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/1513/pg1513.txt
+
+Connection from:  ('127.0.0.1', 16906)
+Received a GetWorkRequest.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/23042/pg23042.txt
+
+{'romeo.': 188, 'juliet.': 132, 'capulet.': 108, 'nurse.': 104, 'project': 84, 'mercutio.': 67, 'benvolio.': 65, 'lawrence.': 58, 'gutenberg™': 54, 'should': 50, 'romeo,': 41, 'paris.': 31, 'electronic': 27, 'gutenberg': 26, 'heaven': 26, 'juliet': 24, 'cannot': 23, 'capulet’s': 22, 'tybalt,': 22, 'night.': 22}
+{'_pros._': 114, 'project': 88, '_seb._': 67, '_ste._': 60, '_ant._': 57, 'gutenberg™': 54, '_gon._': 52, '_mir._': 50, '_cal._': 49, '_ari._': 47, '_alon._': 40, '_trin._': 39, 'hanmer.': 38, 'should': 35, 'theobald.': 34, 'capell.': 31, '_fer._': 31, '_enter': 28, 'electronic': 27, 'gutenberg': 25}
+Connection from:  ('127.0.0.1', 16911)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/1513/pg1513.txt
+romeo. 188
+juliet. 132
+capulet. 108
+nurse. 104
+project 84
+mercutio. 67
+benvolio. 65
+lawrence. 58
+gutenbergâ„¢ 54
+should 50
+romeo, 41
+paris. 31
+electronic 27
+gutenberg 26
+heaven 26
+juliet 24
+cannot 23
+capuletâ€™s 22
+tybalt, 22
+night. 22
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+
+Connection from:  ('127.0.0.1', 16912)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/23042/pg23042.txt
+_pros._ 114
+project 88
+_seb._ 67
+_ste._ 60
+_ant._ 57
+gutenbergâ„¢ 54
+_gon._ 52
+_mir._ 50
+_cal._ 49
+_ari._ 47
+_alon._ 40
+_trin._ 39
+hanmer. 38
+should 35
+theobald. 34
+capell. 31
+_fer._ 31
+_enter 28
+electronic 27
+gutenberg 25
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+Connection from:
+ ('127.0.0.1', 16913)
+Received a GetWorkRequest.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/1526/pg1526.txt
+
+Connection from:  ('127.0.0.1', 16914)
+Received a GetWorkRequest.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/1531/pg1531.txt
+
+{'viola.': 125, 'olivia.': 125, 'clown.': 108, 'malvolio.': 97, 'andrew.': 96, 'project': 84, 'maria.': 70, 'fabian.': 60, 'gutenberg™': 54, 'sebastian.': 36, 'antonio.': 29, 'should': 27, 'electronic': 27, 'gutenberg': 26, 'olivia’s': 25, 'though': 24, 'before': 22, '[_exit._]': 22, 'madam,': 21, 'there’s': 20}
+Connection from:  ('127.0.0.1', 16919)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/1526/pg1526.txt
+viola. 125
+olivia. 125
+clown. 108
+malvolio. 97
+andrew. 96
+project 84
+maria. 70
+fabian. 60
+gutenbergâ„¢ 54
+sebastian. 36
+antonio. 29
+should 27
+electronic 27
+gutenberg 26
+oliviaâ€™s 25
+though 24
+before 22
+[_exit._] 22
+madam, 21
+thereâ€™s 20
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+
+Connection from:  ('127.0.0.1', 16920)
+Received a GetWorkRequest.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/27761/pg27761.txt
+
+{'othello.': 281, 'desdemona.': 170, 'cassio.': 129, 'emilia.': 114, 'project': 84, 'roderigo.': 71, 'cassio': 54, 'gutenberg™': 54, 'should': 47, 'cassio,': 36, 'heaven': 35, 'cannot': 34, 'lodovico.': 33, 'brabantio.': 31, 'cyprus.': 30, 'electronic': 27, 'gutenberg': 26, 'honest': 26, 'though': 25, 'desdemona': 25}
+Connection from:  ('127.0.0.1', 16922)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/1531/pg1531.txt
+othello. 281
+desdemona. 170
+cassio. 129
+emilia. 114
+project 84
+roderigo. 71
+cassio 54
+gutenbergâ„¢ 54
+should 47
+cassio, 36
+heaven 35
+cannot 34
+lodovico. 33
+brabantio. 31
+cyprus. 30
+electronic 27
+gutenberg 26
+honest 26
+though 25
+desdemona 25
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+
+Connection from:  ('127.0.0.1', 16923)
+Received a GetWorkRequest.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/1533/pg1533.txt
+
+{'[footnote': 477, '_ham._': 280, '_i.e._,': 133, 'project': 83, '_king._': 76, '_hor._': 75, '_pol._': 69, 'gutenberg™': 54, '_queen._': 53, '_laer._': 47, '_oph._': 47, 'hamlet': 45, '_enter_': 41, 'should': 40, 'hamlet,': 31, 'electronic': 29, 'without': 28, '_ros._': 26, 'gutenberg': 25, '[_exit_': 25}
+Connection from:  ('127.0.0.1', 16928)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/27761/pg27761.txt
+[footnote 477
+_ham._ 280
+_i.e._, 133
+project 83
+_king._ 76
+_hor._ 75
+_pol._ 69
+gutenbergâ„¢ 54
+_queen._ 53
+_laer._ 47
+_oph._ 47
+hamlet 45
+_enter_ 41
+should 40
+hamlet, 31
+electronic 29
+without 28
+_ros._ 26
+gutenberg 25
+[_exit_ 25
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+
+Connection from:  ('127.0.0.1', 16929)
+Received a GetWorkRequest.
+False
+REQWORK
+
+{'macbeth.': 227, 'macduff.': 87, 'project': 84, 'gutenberg™': 54, 'witch.': 51, 'malcolm.': 40, 'should': 40, 'banquo.': 38, 'macbeth': 32, 'murderer.': 31, 'second': 27, 'electronic': 27, 'gutenberg': 26, 'before': 25, 'doctor.': 25, 'without': 24, 'cannot': 24, 'lennox.': 24, 'castle.': 22, 'things': 21}ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/1522/pg1522.txt
+
+
+Connection from:  ('127.0.0.1', 16930)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/1533/pg1533.txt
+macbeth. 227
+macduff. 87
+project 84
+gutenbergâ„¢ 54
+witch. 51
+malcolm. 40
+should 40
+banquo. 38
+macbeth 32
+murderer. 31
+second 27
+electronic 27
+gutenberg 26
+before 25
+doctor. 25
+without 24
+cannot 24
+lennox. 24
+castle. 22
+things 21
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+
+Connection from:  ('127.0.0.1', 16932)
+Received a GetWorkRequest.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/1515/pg1515.txt
+
+{'brutus.': 213, 'cassius.': 150, 'caesar': 100, 'project': 84, 'brutus': 71, 'antony.': 71, 'citizen.': 68, 'caesar.': 61, 'gutenberg™': 54, 'brutus,': 52, 'casca.': 42, 'caesar,': 41, 'caesar’s': 40, 'should': 40, 'cassius,': 35, 'lucius.': 32, 'messala.': 32, 'electronic': 27, 'gutenberg': 26, 'cassius': 25}
+Connection from:  ('127.0.0.1', 16937)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/1522/pg1522.txt
+brutus. 213
+cassius. 150
+caesar 100
+project 84
+brutus 71
+antony. 71
+citizen. 68
+caesar. 61
+gutenbergâ„¢ 54
+brutus, 52
+casca. 42
+caesar, 41
+caesarâ€™s 40
+should 40
+cassius, 35
+lucius. 32
+messala. 32
+electronic 27
+gutenberg 26
+cassius 25
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+
+Connection from:  ('127.0.0.1', 16938)
+Received a GetWorkRequest.
+There are no unstarted paths.
+So handing out an already started (but not finished) path.
+Just in case the other volunteer flakes.
+False
+REQWORK
+
+ACK_REQWORK ANALYSIS:
+Host: www.gutenberg.org
+Path: /cache/epub/1515/pg1515.txt
+
+{'portia.': 123, 'project': 84, 'shylock.': 82, 'bassanio.': 74, 'antonio.': 54, 'gutenberg™': 54, 'lorenzo.': 53, 'should': 52, 'gratiano.': 51, 'launcelet.': 50, 'nerissa.': 42, 'jessica.': 34, 'salarino.': 33, 'house.': 28, 'master': 27, 'electronic': 27, 'gutenberg': 26, 'before': 25, 'cannot': 24, 'bassanio,': 22}
+Connection from:  ('127.0.0.1', 16940)
+Received a WorkCompleteRequest.
+Updated word counts.
+REQ_WORK_COMP /cache/epub/1515/pg1515.txt
+portia. 123
+project 84
+shylock. 82
+bassanio. 74
+antonio. 54
+gutenbergâ„¢ 54
+lorenzo. 53
+should 52
+gratiano. 51
+launcelet. 50
+nerissa. 42
+jessica. 34
+salarino. 33
+house. 28
+master 27
+electronic 27
+gutenberg 26
+before 25
+cannot 24
+bassanio, 22
+
+
+ACK_WORK_COMP
+
+
+Successfully sent over the report
+
+Connection from:  ('127.0.0.1', 16941)
+Received a GetWorkRequest.
+True
+REQWORK
+
+ACK_REQWORK FIN
+
+All work is done. Here are the results.
+Coordinator signaled no more work. Finishing.
+
+
+project: 675
+[footnote: 477
+gutenbergâ„¢: 432
+should: 331
+othello.: 281
+_ham._: 280
+macbeth.: 227
+electronic: 218
+brutus.: 213
+gutenberg: 206
+romeo.: 188
+desdemona.: 170
+cassius.: 150
+_i.e._,: 133
+juliet.: 132
+cassio.: 129
+viola.: 125
+olivia.: 125
+portia.: 123
+_pros._: 114
+emilia.: 114
+capulet.: 108
+clown.: 108
+cannot: 105
+nurse.: 104
+caesar: 100
+malvolio.: 97
+andrew.: 96
+macduff.: 87
+antonio.: 83
+shylock.: 82
+_king._: 76
+_hor._: 75
+bassanio.: 74
+before: 72
+roderigo.: 71
+brutus: 71
+antony.: 71
+maria.: 70
+_pol._: 69
+citizen.: 68
+mercutio.: 67
+_seb._: 67
+benvolio.: 65
+heaven: 61
+caesar.: 61
+_ste._: 60
+fabian.: 60
+lawrence.: 58
+_ant._: 57
+cassio: 54
+_queen._: 53
+lorenzo.: 53
+_gon._: 52
+without: 52
+brutus,: 52
+witch.: 51
+gratiano.: 51
+_mir._: 50
+launcelet.: 50
+_cal._: 49
+though: 49
+_ari._: 47
+_laer._: 47
+_oph._: 47
+hamlet: 45
+casca.: 42
+nerissa.: 42
+romeo,: 41
+_enter_: 41
+caesar,: 41
+_alon._: 40
+malcolm.: 40
+caesarâ€™s: 40
+_trin._: 39
+hanmer.: 38
+banquo.: 38
+sebastian.: 36
+cassio,: 36
+cassius,: 35
+theobald.: 34
+jessica.: 34
+lodovico.: 33
+salarino.: 33
+macbeth: 32
+lucius.: 32
+messala.: 32
+paris.: 31
+capell.: 31
+_fer._: 31
+brabantio.: 31
+hamlet,: 31
+murderer.: 31
+cyprus.: 30
+_enter: 28
+house.: 28
+second: 27
+master: 27
+honest: 26
+_ros._: 26
+oliviaâ€™s: 25
+desdemona: 25
+[_exit_: 25
+doctor.: 25
+cassius: 25
+juliet: 24
+lennox.: 24
+capuletâ€™s: 22
+tybalt,: 22
+night.: 22
+[_exit._]: 22
+castle.: 22
+bassanio,: 22
+madam,: 21
+things: 21
+thereâ€™s: 20
+{'portia.': 123, 'project': 84, 'shylock.': 82, 'bassanio.': 74, 'antonio.': 54, 'gutenberg™': 54, 'lorenzo.': 53, 'should': 52, 'gratiano.': 51, 'launcelet.': 50, 'nerissa.': 42, 'jessica.': 34, 'salarino.': 33, 'house.': 28, 'master': 27, 'electronic': 27, 'gutenberg': 26, 'before': 25, 'cannot': 24, 'bassanio,': 22}
+Connection for Volunteer to Coordinator was refused, Closing socket
+Volunteer report work: Socket was closed
+Connection for Volunteer to Coordinator was refused, Closing socket
+
+Coordinator signaled no more work. Finishing.
+
+.
+----------------------------------------------------------------------
+Ran 1 test in 31.364s
+
+OK

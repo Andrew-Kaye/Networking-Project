@@ -22,17 +22,23 @@ class Volunteer():
 
         self.coordinator_host = coordinator_host
         self.coordinator_port = coordinator_port
-        self.client_socket = None
 
     def connect(self) -> socket:
         """
         Connects to the Coordinator using TCP on IPv4 and returns the connection
         socket.
         """
+        
         client_socket = socket(family=AF_INET, type=SOCK_STREAM)
-        client_socket.connect((self.coordinator_host, self.coordinator_port))
-        self.client_socket = client_socket
+        try:
+            client_socket.connect((self.coordinator_host, self.coordinator_port))
+        except:
+            print("Connection for Volunteer to Coordinator was refused, Closing socket")
+            client_socket.close()
+            return None
         return client_socket
+
+
 
     def get_work(self) -> GetWorkResponse:
         """
@@ -40,13 +46,17 @@ class Volunteer():
         """
         socket = self.connect()
         try:
-            socket.send(GetWorkRequest().serialize().encode())
-            bufsize = 5000
-            with socket.makefile('r', buffering=bufsize, encoding='utf-8') as response_file:
-                response = Message.deserialize(response_file)
-                return response
-        finally:
-            socket.close()
+            if socket is not None:
+                socket.send(GetWorkRequest().serialize().encode())
+                bufsize = 5000
+                with socket.makefile('r', buffering=bufsize, encoding='utf-8') as response_file:
+                    response = Message.deserialize(response_file)
+                    socket.close()
+                    return response
+        except:
+            print("Volenteer: Cannot get work, closing socket")
+            if socket is not None: socket.close()
+            
 
     def do_work(self, get_work_response: GetWorkResponse) -> dict:
         """
@@ -92,17 +102,20 @@ class Volunteer():
         """
 
         # TODO: implement
-        if path != "":
+        try:
             socket = self.connect()
-            try:
+            if socket is not None:
                 socket.send(WorkCompleteRequest(path, result).serialize().encode())
                 with socket.makefile('r', encoding='utf-8') as response_file:
                     response = Message.deserialize(response_file)
                 print("\nSuccessfully sent over the report\n")
-                return response
-            finally:
                 socket.close()
-        return WorkCompleteResponse.serialize()
+                return response
+            else:
+                print("Volunteer report work: Socket was closed")
+        except error as e:
+            print("Volunteer: Cannot Report work")
+
 
     def keep_working_until_done(self):
         """
@@ -113,19 +126,14 @@ class Volunteer():
         while True:
             try:
                 get_work_response = self.get_work()
-                if "FIN" in get_work_response.serialize():
+                if get_work_response is None or get_work_response.path is '':
                     print("\nCoordinator signaled no more work. Finishing.\n")
                     break
                 else:
                     do_work_response = self.do_work(get_work_response)
-                    try:
-                        report_work_response = self.report_work(get_work_response.path, do_work_response)
-                        print(report_work_response)
-                    except:
-                        print("Volunteer:Cannot report work, assuming there is no more work")
-                        self.client_socket.close()
-                        return None
-            except:
+                    report_work_response = self.report_work(get_work_response.path, do_work_response)
+
+            except error as e:
                 print("Volunteer: Coordinator connection refused, assuming no work to do.")
                 break
 
